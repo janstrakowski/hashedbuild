@@ -1,0 +1,853 @@
+==================
+Simple identifier
+==================
+
+foo
+
+---
+
+(source_file (expression (identifier)))
+
+==================
+Boolean true
+==================
+
+true
+
+---
+
+(source_file (expression (bool)))
+
+==================
+Boolean false
+==================
+
+false
+
+---
+
+(source_file (expression (bool)))
+
+==================
+Integer literal
+==================
+
+42
+
+---
+
+(source_file (expression (integer)))
+
+==================
+Float - plain decimal
+==================
+
+3.14
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - leading dot
+==================
+
+.5
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - trailing dot
+==================
+
+5.
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - exponent
+==================
+
+1e10
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - signed exponent
+==================
+
+1.5e-3
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - signed value
+==================
+
+-3.14
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - infinity (short form)
+==================
+
+inf
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - infinity (long form)
+==================
+
+infinity
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - negative infinity
+==================
+
+-infinity
+
+---
+
+(source_file (expression (float)))
+
+==================
+Float - NaN
+==================
+
+NaN
+
+---
+
+(source_file (expression (float)))
+
+==================
+Path - absolute
+==================
+
+/usr/local/bin
+
+---
+
+(source_file (expression (path)))
+
+==================
+Path - relative
+==================
+
+./config/settings
+
+---
+
+(source_file (expression (path)))
+
+==================
+Path - parent relative
+==================
+
+../shared/lib
+
+---
+
+(source_file (expression (path)))
+
+==================
+String - empty
+==================
+
+""
+
+---
+
+(source_file (expression (string)))
+
+==================
+String - plain text
+==================
+
+"hello world"
+
+---
+
+(source_file (expression (string)))
+
+==================
+String - newline escape
+==================
+
+"line1\nline2"
+
+---
+
+(source_file (expression (string (escape_sequence))))
+
+==================
+String - multiple escapes
+==================
+
+"a\tb\\c"
+
+---
+
+(source_file (expression (string (escape_sequence) (escape_sequence))))
+
+==================
+String - hex escape
+==================
+
+"\x41"
+
+---
+
+(source_file (expression (string (escape_sequence))))
+
+==================
+String - unicode escape (4 hex digits)
+==================
+
+"\u00e9"
+
+---
+
+(source_file (expression (string (escape_sequence))))
+
+==================
+String - unicode escape (braced)
+==================
+
+"\u{1F600}"
+
+---
+
+(source_file (expression (string (escape_sequence))))
+
+==================
+Structure - empty
+==================
+
+{}
+
+---
+
+(source_file (expression (structure)))
+
+==================
+Structure - single field, no value
+==================
+
+{a}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field (expression (identifier))))))
+
+==================
+Structure - single field with value
+==================
+
+{a = 1}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field
+        (expression (identifier))
+        (expression (integer))))))
+
+==================
+Structure - multiple fields, no values
+==================
+
+{a, b, c}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field (expression (identifier)))
+      (structure_field (expression (identifier)))
+      (structure_field (expression (identifier))))))
+
+==================
+Structure - multiple fields with values
+==================
+
+{a = 1, b = 2}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field
+        (expression (identifier))
+        (expression (integer)))
+      (structure_field
+        (expression (identifier))
+        (expression (integer))))))
+
+==================
+Structure - trailing comma
+==================
+
+{a, b,}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field (expression (identifier)))
+      (structure_field (expression (identifier))))))
+
+==================
+Structure - nested
+==================
+
+{a = {b = 1}}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field
+        (expression (identifier))
+        (expression
+          (structure
+            (structure_field
+              (expression (identifier))
+              (expression (integer)))))))))
+
+==================
+Function - identity
+==================
+
+|x| x
+
+---
+
+(source_file
+  (expression
+    (function
+      (identifier)
+      (expression (identifier)))))
+
+==================
+Function - arithmetic body
+==================
+
+|x| x + 1
+
+---
+
+(source_file
+  (expression
+    (function
+      (identifier)
+      (expression
+        (add
+          (expression (identifier))
+          (expression (integer)))))))
+
+==================
+Function - curried (nested)
+==================
+
+|x| |y| x
+
+---
+
+(source_file
+  (expression
+    (function
+      (identifier)
+      (expression
+        (function
+          (identifier)
+          (expression (identifier)))))))
+
+==================
+Addition
+==================
+
+1 + 2
+
+---
+
+(source_file
+  (expression
+    (add
+      (expression (integer))
+      (expression (integer)))))
+
+==================
+Subtraction
+==================
+
+5 - 3
+
+---
+
+(source_file
+  (expression
+    (subtract
+      (expression (integer))
+      (expression (integer)))))
+
+==================
+Multiplication
+==================
+
+2 * 3
+
+---
+
+(source_file
+  (expression
+    (multiply
+      (expression (integer))
+      (expression (integer)))))
+
+==================
+Division
+==================
+
+6 / 2
+
+---
+
+(source_file
+  (expression
+    (divide
+      (expression (integer))
+      (expression (integer)))))
+
+==================
+Modulo
+==================
+
+5 % 2
+
+---
+
+(source_file
+  (expression
+    (modulo
+      (expression (integer))
+      (expression (integer)))))
+
+==================
+Precedence - multiplication over addition
+==================
+
+1 + 2 * 3
+
+---
+
+(source_file
+  (expression
+    (add
+      (expression (integer))
+      (expression
+        (multiply
+          (expression (integer))
+          (expression (integer)))))))
+
+==================
+Precedence - multiplication over addition (reversed)
+==================
+
+2 * 3 + 1
+
+---
+
+(source_file
+  (expression
+    (add
+      (expression
+        (multiply
+          (expression (integer))
+          (expression (integer))))
+      (expression (integer)))))
+
+==================
+Associativity - subtraction is left associative
+==================
+
+10 - 3 - 2
+
+---
+
+(source_file
+  (expression
+    (subtract
+      (expression
+        (subtract
+          (expression (integer))
+          (expression (integer))))
+      (expression (integer)))))
+
+==================
+Associativity - division is left associative
+==================
+
+100 / 5 / 2
+
+---
+
+(source_file
+  (expression
+    (divide
+      (expression
+        (divide
+          (expression (integer))
+          (expression (integer))))
+      (expression (integer)))))
+
+==================
+Associativity - modulo and multiply share precedence, left associative
+==================
+
+10 % 3 * 2
+
+---
+
+(source_file
+  (expression
+    (multiply
+      (expression
+        (modulo
+          (expression (integer))
+          (expression (integer))))
+      (expression (integer)))))
+
+==================
+Logical not
+==================
+
+!true
+
+---
+
+(source_file
+  (expression
+    (not (expression (bool)))))
+
+==================
+Logical not - double negation
+==================
+
+!!true
+
+---
+
+(source_file
+  (expression
+    (not
+      (expression
+        (not (expression (bool)))))))
+
+==================
+Logical or (prefix form)
+==================
+
+|| false
+
+---
+
+(source_file
+  (expression
+    (or (expression (bool)))))
+
+==================
+Logical and (prefix form)
+==================
+
+&& true
+
+---
+
+(source_file
+  (expression
+    (and (expression (bool)))))
+
+==================
+Field access
+==================
+
+config.name
+
+---
+
+(source_file
+  (expression
+    (field_get
+      (expression (identifier))
+      (identifier))))
+
+==================
+Field access - chained (left associative)
+==================
+
+a.b.c
+
+---
+
+(source_file
+  (expression
+    (field_get
+      (expression
+        (field_get
+          (expression (identifier))
+          (identifier)))
+      (identifier))))
+
+==================
+Indexed get
+==================
+
+items[0]
+
+---
+
+(source_file
+  (expression
+    (get
+      (expression (identifier))
+      (expression (integer)))))
+
+==================
+Indexed get - chained
+==================
+
+matrix[0][1]
+
+---
+
+(source_file
+  (expression
+    (get
+      (expression
+        (get
+          (expression (identifier))
+          (expression (integer))))
+      (expression (integer)))))
+
+==================
+Field set
+==================
+
+config.+name "value"
+
+---
+
+(source_file
+  (expression
+    (field_set
+      (expression (identifier))
+      (identifier)
+      (expression (string)))))
+
+==================
+Indexed set
+==================
+
+items+[0] "x"
+
+---
+
+(source_file
+  (expression
+    (set
+      (expression (identifier))
+      (expression (integer))
+      (expression (string)))))
+
+==================
+Set all
+==================
+
+a |< b
+
+---
+
+(source_file
+  (expression
+    (set_all
+      (expression (identifier))
+      (expression (identifier)))))
+
+==================
+Function call
+==================
+
+f x
+
+---
+
+(source_file
+  (expression
+    (call
+      (expression (identifier))
+      (expression (identifier)))))
+
+==================
+Function call - curried chain (left associative)
+==================
+
+f x y
+
+---
+
+(source_file
+  (expression
+    (call
+      (expression
+        (call
+          (expression (identifier))
+          (expression (identifier))))
+      (expression (identifier)))))
+
+==================
+Function call - string argument
+==================
+
+print "hello"
+
+---
+
+(source_file
+  (expression
+    (call
+      (expression (identifier))
+      (expression (string)))))
+
+==================
+Include - string path
+==================
+
+include "module.hb"
+
+---
+
+(source_file
+  (expression
+    (include (expression (string)))))
+
+==================
+Include - path literal
+==================
+
+include ./module
+
+---
+
+(source_file
+  (expression
+    (include (expression (path)))))
+
+==================
+Comment - leading, does not attach to expression
+==================
+
+# leading comment
+42
+
+---
+
+(source_file
+  (comment)
+  (expression (integer)))
+
+==================
+Comment - trailing
+==================
+
+42 # trailing comment
+
+---
+
+(source_file
+  (expression (integer))
+  (comment))
+
+==================
+Integration - structure with function and string fields
+==================
+
+{handler = |x| x + 1, name = "worker"}
+
+---
+
+(source_file
+  (expression
+    (structure
+      (structure_field
+        (expression (identifier))
+        (expression
+          (function
+            (identifier)
+            (expression
+              (add
+                (expression (identifier))
+                (expression (integer)))))))
+      (structure_field
+        (expression (identifier))
+        (expression (string))))))
+
+==================
+Integration - call with field access argument
+==================
+
+f config.name
+
+---
+
+(source_file
+  (expression
+    (call
+      (expression (identifier))
+      (expression
+        (field_get
+          (expression (identifier))
+          (identifier))))))
+
+==================
+Integration - include of a call result
+==================
+
+include get_path x
+
+---
+
+(source_file
+  (expression
+    (include
+      (expression
+        (call
+          (expression (identifier))
+          (expression (identifier)))))))
