@@ -96,7 +96,10 @@ Float - signed value
 
 ---
 
-(source_file (expression (float)))
+(source_file
+  (expression
+    (negate
+      (expression (float)))))
 
 ==================
 Float - infinity (short form)
@@ -126,7 +129,10 @@ Float - negative infinity
 
 ---
 
-(source_file (expression (float)))
+(source_file
+  (expression
+    (negate
+      (expression (float)))))
 
 ==================
 Float - NaN

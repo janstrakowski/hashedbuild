@@ -2,11 +2,12 @@
 // @ts-check
 
 const PREC = {
-  field: 10,          // ., [], .+, +[, |<
+  field: 11,          // ., [], .+, +[, |<
+  include: 10,          // include
   call: 9,
-  unary: 8,          // !, ||, &&, include
-  multiplicative: 7, // *, /, %
-  additive: 6,       // +, -
+  multiplicative: 8, // *, /, %
+  additive: 7,       // +, - (with negate)
+  logical: 5,        // !, ||, &&
 };
 
 module.exports = grammar({
@@ -28,10 +29,10 @@ module.exports = grammar({
       const exponent = seq(/[eE]/, optional(/[-+]/), decimal_digit_seq);
 
       return token(prec(1, choice(
-        seq(optional(/[-+]/), optional(decimal_digit_seq), '.', decimal_digit_seq, optional(exponent)),
-        seq(optional(/[-+]/), decimal_digit_seq, '.', optional(exponent)),
-        seq(optional(/[-+]/), decimal_digit_seq, exponent),
-        seq(optional(/[-+]/), /inf(inity)?/),
+        seq(optional(decimal_digit_seq), '.', decimal_digit_seq, optional(exponent)),
+        seq(decimal_digit_seq, '.', optional(exponent)),
+        seq(decimal_digit_seq, exponent),
+        /inf(inity)?/,
         /NaN/
       )));
     },
@@ -81,11 +82,12 @@ module.exports = grammar({
       "+",
       $.expression,
     )),
-    subtract: $ => prec.left(PREC.additive, seq(
+    subtract: $ => prec.dynamic(2, prec.left(PREC.additive, prec.dynamic(1, seq(
       $.expression,
       "-",
       $.expression,
-    )),
+    )))),
+
     multiply: $ => prec.left(PREC.multiplicative, seq(
       $.expression,
       "*",
@@ -101,15 +103,19 @@ module.exports = grammar({
       "%",
       $.expression,
     )),
-    not: $ => prec(PREC.unary, seq(
+    negate: $ => prec.dynamic(1, prec.left(PREC.additive, seq(
+      "-",
+      $.expression,
+    ))),
+    not: $ => prec(PREC.logical, seq(
       "!",
       $.expression,
     )),
-    or: $ => prec(PREC.unary, seq(
+    or: $ => prec(PREC.logical, seq(
       "||",
       $.expression,
     )),
-    and: $ => prec(PREC.unary, seq(
+    and: $ => prec(PREC.logical, seq(
       "&&",
       $.expression,
     )),
@@ -146,7 +152,7 @@ module.exports = grammar({
       $.expression,
       $.expression,
     )),
-    include: $ => prec(PREC.unary, seq(
+    include: $ => prec.left(PREC.include, seq(
       "include",
       $.expression,
     )),
@@ -164,6 +170,7 @@ module.exports = grammar({
       $.multiply,
       $.divide,
       $.modulo,
+      $.negate,
       $.not,
       $.or,
       $.and,

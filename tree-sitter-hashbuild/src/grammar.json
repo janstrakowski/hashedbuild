@@ -46,18 +46,6 @@
                   "members": [
                     {
                       "type": "PATTERN",
-                      "value": "[-+]"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
                       "value": "[0-9]+"
                     },
                     {
@@ -112,18 +100,6 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[-+]"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
                   "type": "PATTERN",
                   "value": "[0-9]+"
                 },
@@ -169,18 +145,6 @@
             {
               "type": "SEQ",
               "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[-+]"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
                 {
                   "type": "PATTERN",
                   "value": "[0-9]+"
@@ -213,25 +177,8 @@
               ]
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "PATTERN",
-                      "value": "[-+]"
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "inf(inity)?"
-                }
-              ]
+              "type": "PATTERN",
+              "value": "inf(inity)?"
             },
             {
               "type": "PATTERN",
@@ -437,7 +384,7 @@
     },
     "add": {
       "type": "PREC_LEFT",
-      "value": 6,
+      "value": 7,
       "content": {
         "type": "SEQ",
         "members": [
@@ -457,29 +404,37 @@
       }
     },
     "subtract": {
-      "type": "PREC_LEFT",
-      "value": 6,
+      "type": "PREC_DYNAMIC",
+      "value": 2,
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "expression"
-          },
-          {
-            "type": "STRING",
-            "value": "-"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression"
+        "type": "PREC_LEFT",
+        "value": 7,
+        "content": {
+          "type": "PREC_DYNAMIC",
+          "value": 1,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              },
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              }
+            ]
           }
-        ]
+        }
       }
     },
     "multiply": {
       "type": "PREC_LEFT",
-      "value": 7,
+      "value": 8,
       "content": {
         "type": "SEQ",
         "members": [
@@ -500,7 +455,7 @@
     },
     "divide": {
       "type": "PREC_LEFT",
-      "value": 7,
+      "value": 8,
       "content": {
         "type": "SEQ",
         "members": [
@@ -521,7 +476,7 @@
     },
     "modulo": {
       "type": "PREC_LEFT",
-      "value": 7,
+      "value": 8,
       "content": {
         "type": "SEQ",
         "members": [
@@ -540,9 +495,30 @@
         ]
       }
     },
+    "negate": {
+      "type": "PREC_DYNAMIC",
+      "value": 1,
+      "content": {
+        "type": "PREC_LEFT",
+        "value": 7,
+        "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            }
+          ]
+        }
+      }
+    },
     "not": {
       "type": "PREC",
-      "value": 8,
+      "value": 5,
       "content": {
         "type": "SEQ",
         "members": [
@@ -559,7 +535,7 @@
     },
     "or": {
       "type": "PREC",
-      "value": 8,
+      "value": 5,
       "content": {
         "type": "SEQ",
         "members": [
@@ -576,7 +552,7 @@
     },
     "and": {
       "type": "PREC",
-      "value": 8,
+      "value": 5,
       "content": {
         "type": "SEQ",
         "members": [
@@ -593,7 +569,7 @@
     },
     "field_get": {
       "type": "PREC_LEFT",
-      "value": 10,
+      "value": 11,
       "content": {
         "type": "SEQ",
         "members": [
@@ -614,7 +590,7 @@
     },
     "get": {
       "type": "PREC_LEFT",
-      "value": 10,
+      "value": 11,
       "content": {
         "type": "SEQ",
         "members": [
@@ -639,7 +615,7 @@
     },
     "field_set": {
       "type": "PREC_LEFT",
-      "value": 10,
+      "value": 11,
       "content": {
         "type": "SEQ",
         "members": [
@@ -664,7 +640,7 @@
     },
     "set": {
       "type": "PREC_LEFT",
-      "value": 10,
+      "value": 11,
       "content": {
         "type": "SEQ",
         "members": [
@@ -693,7 +669,7 @@
     },
     "set_all": {
       "type": "PREC_LEFT",
-      "value": 10,
+      "value": 11,
       "content": {
         "type": "SEQ",
         "members": [
@@ -730,8 +706,8 @@
       }
     },
     "include": {
-      "type": "PREC",
-      "value": 8,
+      "type": "PREC_LEFT",
+      "value": 10,
       "content": {
         "type": "SEQ",
         "members": [
@@ -800,6 +776,10 @@
         {
           "type": "SYMBOL",
           "name": "modulo"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "negate"
         },
         {
           "type": "SYMBOL",
