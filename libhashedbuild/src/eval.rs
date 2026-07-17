@@ -126,7 +126,7 @@ fn bind_pattern(env: &mut Environment, pattern: &Pattern, arg: &Value) -> Result
 
 fn builtins() -> Map {
     Map::new()
-        .put(Value::String("load_file".to_owned()), Value::Function(data::Function::LoadFile))
+        .put(Value::String("read_file".to_owned()), Value::Function(data::Function::LoadFile))
         .put(Value::String("write_file".to_owned()), Value::Function(data::Function::WriteFile))
 }
 
