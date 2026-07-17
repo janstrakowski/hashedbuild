@@ -77,5 +77,65 @@ abadoned my old codebase and started a new in another language. I went C -> Zig 
 
 So in this week I switched to Rust but yesterday (17th July) and today (18th July) worked all the day, really hard on the project; and I can run a working examples.
 
-### Do I vibe-code?
+## Do I vibe-code?
 Yes, but I can program myself. I treat it as a typing speed boost and design boost in simple matters.
+
+## Try it yourself example
+Run:
+```
+git clone https://github.com/janstrakowski/hashedbuild.git
+```
+Go inside:
+```
+cd hashedbuild/
+```
+Build the tool:
+```
+cargo build --release
+```
+Set the cache path:
+```
+export HASHEDBUILD_CACHE=$(pwd)/cache
+```
+Create the script:
+```
+cat << 'EOF' > script.hashb
+write_file ((read_file ./lhs.txt)(read_file ./rhs.txt))
+EOF
+```
+Create the first file:
+```
+cat << 'EOF' > lhs.txt
+Hello,
+EOF
+```
+Create the second:
+```
+cat << 'EOF' > rhs.txt
+World!
+EOF
+```
+Execute the script:
+```
+target/release/hashedbuild-cli eval --source . -f script.hashb
+```
+
+It will return a path. You can print its contents to the terminal:
+```
+cat cache/FVHaoUERMcmCAw8_d0GYfbzN3z5hNyolaxToFKw-5B4
+```
+
+It prints:
+```
+Hello,
+World!
+```
+
+This was the code:
+```
+write_file ((read_file ./lhs.txt)(read_file ./rhs.txt))
+```
+It takes file `<source_directory>/lhs.txt` and reads its contents to a string. Then it takes the `<source_directory>/rhs.txt` file, and does the same.
+Then it concatenates the two resulting strings into one. Finally it produces a new file, with the final string written.
+## Donate
+If you would like to support me in my work, you can donate. I provide two ways: [BuyMeACoffie](https://buymeacoffee.com/janstrakowski) or [Bank Transfer](https://janstrakowski.github.io/jansdonations/).
