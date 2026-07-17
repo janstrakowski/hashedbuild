@@ -6,7 +6,7 @@ foo
 
 ---
 
-(source_file (expression (identifier)))
+(source_file (identifier))
 
 ==================
 Boolean true
@@ -16,7 +16,7 @@ true
 
 ---
 
-(source_file (expression (bool)))
+(source_file (bool))
 
 ==================
 Boolean false
@@ -26,7 +26,7 @@ false
 
 ---
 
-(source_file (expression (bool)))
+(source_file (bool))
 
 ==================
 Integer literal
@@ -36,7 +36,7 @@ Integer literal
 
 ---
 
-(source_file (expression (integer)))
+(source_file (integer))
 
 ==================
 Float - plain decimal
@@ -46,7 +46,7 @@ Float - plain decimal
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - leading dot
@@ -56,7 +56,7 @@ Float - leading dot
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - trailing dot
@@ -66,7 +66,7 @@ Float - trailing dot
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - exponent
@@ -76,7 +76,7 @@ Float - exponent
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - signed exponent
@@ -86,7 +86,7 @@ Float - signed exponent
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - signed value
@@ -97,9 +97,8 @@ Float - signed value
 ---
 
 (source_file
-  (expression
-    (negate
-      (expression (float)))))
+  (negate
+    (float)))
 
 ==================
 Float - infinity (short form)
@@ -109,7 +108,7 @@ inf
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - infinity (long form)
@@ -119,7 +118,7 @@ infinity
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Float - negative infinity
@@ -130,9 +129,8 @@ Float - negative infinity
 ---
 
 (source_file
-  (expression
-    (negate
-      (expression (float)))))
+  (negate
+    (float)))
 
 ==================
 Float - NaN
@@ -142,7 +140,7 @@ NaN
 
 ---
 
-(source_file (expression (float)))
+(source_file (float))
 
 ==================
 Path - absolute
@@ -152,7 +150,7 @@ Path - absolute
 
 ---
 
-(source_file (expression (path)))
+(source_file (path))
 
 ==================
 Path - relative
@@ -162,7 +160,7 @@ Path - relative
 
 ---
 
-(source_file (expression (path)))
+(source_file (path))
 
 ==================
 Path - parent relative
@@ -172,7 +170,7 @@ Path - parent relative
 
 ---
 
-(source_file (expression (path)))
+(source_file (path))
 
 ==================
 String - empty
@@ -182,7 +180,7 @@ String - empty
 
 ---
 
-(source_file (expression (string)))
+(source_file (string))
 
 ==================
 String - plain text
@@ -192,7 +190,7 @@ String - plain text
 
 ---
 
-(source_file (expression (string)))
+(source_file (string))
 
 ==================
 String - newline escape
@@ -202,7 +200,7 @@ String - newline escape
 
 ---
 
-(source_file (expression (string (escape_sequence))))
+(source_file (string (escape_sequence)))
 
 ==================
 String - multiple escapes
@@ -212,7 +210,7 @@ String - multiple escapes
 
 ---
 
-(source_file (expression (string (escape_sequence) (escape_sequence))))
+(source_file (string (escape_sequence) (escape_sequence)))
 
 ==================
 String - hex escape
@@ -222,7 +220,7 @@ String - hex escape
 
 ---
 
-(source_file (expression (string (escape_sequence))))
+(source_file (string (escape_sequence)))
 
 ==================
 String - unicode escape (4 hex digits)
@@ -232,7 +230,7 @@ String - unicode escape (4 hex digits)
 
 ---
 
-(source_file (expression (string (escape_sequence))))
+(source_file (string (escape_sequence)))
 
 ==================
 String - unicode escape (braced)
@@ -242,7 +240,7 @@ String - unicode escape (braced)
 
 ---
 
-(source_file (expression (string (escape_sequence))))
+(source_file (string (escape_sequence)))
 
 ==================
 Structure - empty
@@ -252,7 +250,7 @@ Structure - empty
 
 ---
 
-(source_file (expression (structure)))
+(source_file (structure))
 
 ==================
 Structure - single field, no value
@@ -263,9 +261,8 @@ Structure - single field, no value
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field (expression (identifier))))))
+  (structure
+    (structure_field (identifier))))
 
 ==================
 Structure - single field with value
@@ -276,58 +273,54 @@ Structure - single field with value
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field
-        (expression (identifier))
-        (expression (integer))))))
+  (structure
+    (structure_field
+      (identifier)
+      (integer))))
 
 ==================
 Structure - multiple fields, no values
 ==================
 
-{a, b, c}
+{a; b; c}
 
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field (expression (identifier)))
-      (structure_field (expression (identifier)))
-      (structure_field (expression (identifier))))))
+  (structure
+    (structure_field (identifier))
+    (structure_field (identifier))
+    (structure_field (identifier))))
 
 ==================
 Structure - multiple fields with values
 ==================
 
-{a = 1, b = 2}
+{a = 1; b = 2}
 
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field
-        (expression (identifier))
-        (expression (integer)))
-      (structure_field
-        (expression (identifier))
-        (expression (integer))))))
+  (structure
+    (structure_field
+      (identifier)
+      (integer))
+    (structure_field
+      (identifier)
+      (integer))))
 
 ==================
 Structure - trailing comma
 ==================
 
-{a, b,}
+{a; b;}
 
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field (expression (identifier)))
-      (structure_field (expression (identifier))))))
+  (structure
+    (structure_field (identifier))
+    (structure_field (identifier))))
 
 ==================
 Structure - nested
@@ -338,15 +331,13 @@ Structure - nested
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field
-        (expression (identifier))
-        (expression
-          (structure
-            (structure_field
-              (expression (identifier))
-              (expression (integer)))))))))
+  (structure
+    (structure_field
+      (identifier)
+      (structure
+        (structure_field
+          (identifier)
+          (integer))))))
 
 ==================
 Function - identity
@@ -357,10 +348,9 @@ Function - identity
 ---
 
 (source_file
-  (expression
-    (function
-      (identifier)
-      (expression (identifier)))))
+  (function
+    (identifier)
+    (identifier)))
 
 ==================
 Function - arithmetic body
@@ -371,13 +361,11 @@ Function - arithmetic body
 ---
 
 (source_file
-  (expression
-    (function
+  (function
+    (identifier)
+    (add
       (identifier)
-      (expression
-        (add
-          (expression (identifier))
-          (expression (integer)))))))
+      (integer))))
 
 ==================
 Function - curried (nested)
@@ -388,13 +376,11 @@ Function - curried (nested)
 ---
 
 (source_file
-  (expression
+  (function
+    (identifier)
     (function
       (identifier)
-      (expression
-        (function
-          (identifier)
-          (expression (identifier)))))))
+      (identifier))))
 
 ==================
 Addition
@@ -405,10 +391,9 @@ Addition
 ---
 
 (source_file
-  (expression
-    (add
-      (expression (integer))
-      (expression (integer)))))
+  (add
+    (integer)
+    (integer)))
 
 ==================
 Subtraction
@@ -419,10 +404,9 @@ Subtraction
 ---
 
 (source_file
-  (expression
-    (subtract
-      (expression (integer))
-      (expression (integer)))))
+  (subtract
+    (integer)
+    (integer)))
 
 ==================
 Multiplication
@@ -433,10 +417,9 @@ Multiplication
 ---
 
 (source_file
-  (expression
-    (multiply
-      (expression (integer))
-      (expression (integer)))))
+  (multiply
+    (integer)
+    (integer)))
 
 ==================
 Division
@@ -447,10 +430,9 @@ Division
 ---
 
 (source_file
-  (expression
-    (divide
-      (expression (integer))
-      (expression (integer)))))
+  (divide
+    (integer)
+    (integer)))
 
 ==================
 Modulo
@@ -461,10 +443,9 @@ Modulo
 ---
 
 (source_file
-  (expression
-    (modulo
-      (expression (integer))
-      (expression (integer)))))
+  (modulo
+    (integer)
+    (integer)))
 
 ==================
 Precedence - multiplication over addition
@@ -475,13 +456,11 @@ Precedence - multiplication over addition
 ---
 
 (source_file
-  (expression
-    (add
-      (expression (integer))
-      (expression
-        (multiply
-          (expression (integer))
-          (expression (integer)))))))
+  (add
+    (integer)
+    (multiply
+      (integer)
+      (integer))))
 
 ==================
 Precedence - multiplication over addition (reversed)
@@ -492,13 +471,11 @@ Precedence - multiplication over addition (reversed)
 ---
 
 (source_file
-  (expression
-    (add
-      (expression
-        (multiply
-          (expression (integer))
-          (expression (integer))))
-      (expression (integer)))))
+  (add
+    (multiply
+      (integer)
+      (integer))
+    (integer)))
 
 ==================
 Associativity - subtraction is left associative
@@ -509,13 +486,11 @@ Associativity - subtraction is left associative
 ---
 
 (source_file
-  (expression
+  (subtract
     (subtract
-      (expression
-        (subtract
-          (expression (integer))
-          (expression (integer))))
-      (expression (integer)))))
+      (integer)
+      (integer))
+    (integer)))
 
 ==================
 Associativity - division is left associative
@@ -526,13 +501,11 @@ Associativity - division is left associative
 ---
 
 (source_file
-  (expression
+  (divide
     (divide
-      (expression
-        (divide
-          (expression (integer))
-          (expression (integer))))
-      (expression (integer)))))
+      (integer)
+      (integer))
+    (integer)))
 
 ==================
 Associativity - modulo and multiply share precedence, left associative
@@ -543,13 +516,11 @@ Associativity - modulo and multiply share precedence, left associative
 ---
 
 (source_file
-  (expression
-    (multiply
-      (expression
-        (modulo
-          (expression (integer))
-          (expression (integer))))
-      (expression (integer)))))
+  (multiply
+    (modulo
+      (integer)
+      (integer))
+    (integer)))
 
 ==================
 Logical not
@@ -560,8 +531,7 @@ Logical not
 ---
 
 (source_file
-  (expression
-    (not (expression (bool)))))
+  (not (bool)))
 
 ==================
 Logical not - double negation
@@ -572,34 +542,19 @@ Logical not - double negation
 ---
 
 (source_file
-  (expression
-    (not
-      (expression
-        (not (expression (bool)))))))
+  (not
+    (not (bool))))
 
 ==================
 Logical or (prefix form)
 ==================
 
-|| false
+true || false
 
 ---
 
 (source_file
-  (expression
-    (or (expression (bool)))))
-
-==================
-Logical and (prefix form)
-==================
-
-&& true
-
----
-
-(source_file
-  (expression
-    (and (expression (bool)))))
+  (or (bool) (bool)))
 
 ==================
 Field access
@@ -610,10 +565,9 @@ config.name
 ---
 
 (source_file
-  (expression
-    (field_get
-      (expression (identifier))
-      (identifier))))
+  (field_get
+    (identifier)
+    (identifier)))
 
 ==================
 Field access - chained (left associative)
@@ -624,13 +578,11 @@ a.b.c
 ---
 
 (source_file
-  (expression
+  (field_get
     (field_get
-      (expression
-        (field_get
-          (expression (identifier))
-          (identifier)))
-      (identifier))))
+      (identifier)
+      (identifier))
+    (identifier)))
 
 ==================
 Indexed get
@@ -641,10 +593,9 @@ items[0]
 ---
 
 (source_file
-  (expression
-    (get
-      (expression (identifier))
-      (expression (integer)))))
+  (get
+    (identifier)
+    (integer)))
 
 ==================
 Indexed get - chained
@@ -655,43 +606,11 @@ matrix[0][1]
 ---
 
 (source_file
-  (expression
+  (get
     (get
-      (expression
-        (get
-          (expression (identifier))
-          (expression (integer))))
-      (expression (integer)))))
-
-==================
-Field set
-==================
-
-config.+name "value"
-
----
-
-(source_file
-  (expression
-    (field_set
-      (expression (identifier))
       (identifier)
-      (expression (string)))))
-
-==================
-Indexed set
-==================
-
-items+[0] "x"
-
----
-
-(source_file
-  (expression
-    (set
-      (expression (identifier))
-      (expression (integer))
-      (expression (string)))))
+      (integer))
+    (integer)))
 
 ==================
 Set all
@@ -702,10 +621,9 @@ a |< b
 ---
 
 (source_file
-  (expression
-    (set_all
-      (expression (identifier))
-      (expression (identifier)))))
+  (set_all
+    (identifier)
+    (identifier)))
 
 ==================
 Function call
@@ -716,10 +634,9 @@ f x
 ---
 
 (source_file
-  (expression
-    (call
-      (expression (identifier))
-      (expression (identifier)))))
+  (call
+    (identifier)
+    (identifier)))
 
 ==================
 Function call - curried chain (left associative)
@@ -730,13 +647,11 @@ f x y
 ---
 
 (source_file
-  (expression
+  (call
     (call
-      (expression
-        (call
-          (expression (identifier))
-          (expression (identifier))))
-      (expression (identifier)))))
+      (identifier)
+      (identifier))
+    (identifier)))
 
 ==================
 Function call - string argument
@@ -747,10 +662,9 @@ print "hello"
 ---
 
 (source_file
-  (expression
-    (call
-      (expression (identifier))
-      (expression (string)))))
+  (call
+    (identifier)
+    (string)))
 
 ==================
 Include - string path
@@ -761,8 +675,7 @@ include "module.hb"
 ---
 
 (source_file
-  (expression
-    (include (expression (string)))))
+  (include (string)))
 
 ==================
 Include - path literal
@@ -773,8 +686,7 @@ include ./module
 ---
 
 (source_file
-  (expression
-    (include (expression (path)))))
+  (include (path)))
 
 ==================
 Comment - leading, does not attach to expression
@@ -787,7 +699,7 @@ Comment - leading, does not attach to expression
 
 (source_file
   (comment)
-  (expression (integer)))
+  (integer))
 
 ==================
 Comment - trailing
@@ -798,32 +710,29 @@ Comment - trailing
 ---
 
 (source_file
-  (expression (integer))
+  (integer)
   (comment))
 
 ==================
 Integration - structure with function and string fields
 ==================
 
-{handler = |x| x + 1, name = "worker"}
+{handler = |x| x + 1; name = "worker"}
 
 ---
 
 (source_file
-  (expression
-    (structure
-      (structure_field
-        (expression (identifier))
-        (expression
-          (function
-            (identifier)
-            (expression
-              (add
-                (expression (identifier))
-                (expression (integer)))))))
-      (structure_field
-        (expression (identifier))
-        (expression (string))))))
+  (structure
+    (structure_field
+      (identifier)
+      (function
+        (identifier)
+        (add
+          (identifier)
+          (integer))))
+    (structure_field
+      (identifier)
+      (string))))
 
 ==================
 Integration - call with field access argument
@@ -834,13 +743,11 @@ f config.name
 ---
 
 (source_file
-  (expression
-    (call
-      (expression (identifier))
-      (expression
-        (field_get
-          (expression (identifier))
-          (identifier))))))
+  (call
+    (identifier)
+    (field_get
+      (identifier)
+      (identifier))))
 
 ==================
 Integration - include of a call result
@@ -851,9 +758,355 @@ include get_path x
 ---
 
 (source_file
-  (expression
-    (include
-      (expression
-        (call
-          (expression (identifier))
-          (expression (identifier)))))))
+  (include
+    (call
+      (identifier)
+      (identifier))))
+
+==================
+Parenthesized expression - simple
+==================
+
+(42)
+
+---
+
+(source_file (integer))
+
+==================
+Parenthesized expression - overrides precedence
+==================
+
+(1 + 2) * 3
+
+---
+
+(source_file
+  (multiply
+    (add
+      (integer)
+      (integer))
+    (integer)))
+
+==================
+If expression - basic
+==================
+
+if true then 1 else 2
+
+---
+
+(source_file
+  (if
+    (bool)
+    (integer)
+    (integer)))
+
+==================
+If expression - with comparison condition
+==================
+
+if a > b then a else b
+
+---
+
+(source_file
+  (if
+    (greater_than
+      (identifier)
+      (identifier))
+    (identifier)
+    (identifier)))
+
+==================
+If expression - identifier pattern condition
+==================
+
+if |x| then x else 0
+
+---
+
+(source_file
+  (if
+    (identifier)
+    (identifier)
+    (integer)))
+
+==================
+If expression - structural pattern condition
+==================
+
+if |{a, b}| then a else b
+
+---
+
+(source_file
+  (if
+    (structural_pattern
+      (pattern_field (identifier))
+      (pattern_field (identifier)))
+    (identifier)
+    (identifier)))
+
+==================
+Function - structural pattern parameter
+==================
+
+|{a, b}| a
+
+---
+
+(source_file
+  (function
+    (structural_pattern
+      (pattern_field (identifier))
+      (pattern_field (identifier)))
+    (identifier)))
+
+==================
+Function - named structural pattern parameter
+==================
+
+|p: {a, b}| p
+
+---
+
+(source_file
+  (function
+    (identifier)
+    (structural_pattern
+      (pattern_field (identifier))
+      (pattern_field (identifier)))
+    (identifier)))
+
+==================
+Function - nested structural pattern
+==================
+
+|{a: {b}}| a
+
+---
+
+(source_file
+  (function
+    (structural_pattern
+      (pattern_field
+        (identifier)
+        (structural_pattern
+          (pattern_field (identifier)))))
+    (identifier)))
+
+==================
+Cases - single case, no default
+==================
+
+cases x case |y| y
+
+---
+
+(source_file
+  (cases
+    (identifier)
+    (case (identifier) (identifier))))
+
+==================
+Cases - multiple cases, no default
+==================
+
+cases x case |a| 1, case |b| 2
+
+---
+
+(source_file
+  (cases
+    (identifier)
+    (case (identifier) (integer))
+    (case (identifier) (integer))))
+
+==================
+Cases - with default
+==================
+
+cases x case |y| y, default 0
+
+---
+
+(source_file
+  (cases
+    (identifier)
+    (case (identifier) (identifier))
+    (default (integer))))
+
+==================
+Cases - with guard
+==================
+
+cases n case |y| if (y > 0) true, default false
+
+---
+
+(source_file
+  (cases
+    (identifier)
+    (case
+      (identifier)
+      (greater_than (identifier) (integer))
+      (bool))
+    (default (bool))))
+
+==================
+Cases - structural pattern case
+==================
+
+cases point case |{x, y}| x, default 0
+
+---
+
+(source_file
+  (cases
+    (identifier)
+    (case
+      (structural_pattern
+        (pattern_field (identifier))
+        (pattern_field (identifier)))
+      (identifier))
+    (default (integer))))
+
+==================
+Pass as argument
+==================
+
+x -> f
+
+---
+
+(source_file
+  (pass_as_argument
+    (identifier)
+    (identifier)))
+
+==================
+Pass as argument - left associative chain
+==================
+
+x -> f -> g
+
+---
+
+(source_file
+  (pass_as_argument
+    (pass_as_argument
+      (identifier)
+      (identifier))
+    (identifier)))
+
+==================
+Greater than
+==================
+
+a > b
+
+---
+
+(source_file
+  (greater_than
+    (identifier)
+    (identifier)))
+
+==================
+Greater than or equal
+==================
+
+a >= b
+
+---
+
+(source_file
+  (greater_than_or_equal
+    (identifier)
+    (identifier)))
+
+==================
+Equal
+==================
+
+a == b
+
+---
+
+(source_file
+  (equal
+    (identifier)
+    (identifier)))
+
+==================
+Less than
+==================
+
+a < b
+
+---
+
+(source_file
+  (less_than
+    (identifier)
+    (identifier)))
+
+==================
+Less than or equal
+==================
+
+a <= b
+
+---
+
+(source_file
+  (less_than_or_equal
+    (identifier)
+    (identifier)))
+
+==================
+Integration - if else-branch extends across pass_as_argument
+==================
+
+if a > b then a else b -> f
+
+---
+
+(source_file
+  (if
+    (greater_than (identifier) (identifier))
+    (identifier)
+    (pass_as_argument (identifier) (identifier))))
+
+==================
+Integration - parenthesized if piped with pass_as_argument
+==================
+
+(if a > b then a else b) -> f
+
+---
+
+(source_file
+  (pass_as_argument
+    (if
+      (greater_than (identifier) (identifier))
+      (identifier)
+      (identifier))
+    (identifier)))
+
+==================
+Integration - cases as function body
+==================
+
+|x| cases x case |y| y, default 0
+
+---
+
+(source_file
+  (function
+    (identifier)
+    (cases
+      (identifier)
+      (case (identifier) (identifier))
+      (default (integer)))))
