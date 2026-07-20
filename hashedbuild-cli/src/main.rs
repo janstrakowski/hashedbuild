@@ -1,6 +1,9 @@
 mod cli;
+mod store_dir;
+mod env;
+mod paths;
 
-use std::{env, fs, path::PathBuf};
+use std::fs;
 
 use clap::Parser;
 use libhashedbuild::{data::{Map, Value}, eval::eval, runtime::Runtime, tree_sitter::{parse_file, parse_raw}};
@@ -10,18 +13,13 @@ fn main() {
 
     match cli.command {
         cli::Commands::Eval { argument, file, source } => {
-            let cache_dir_str = match env::var("HASHEDBUILD_CACHE") {
-                Ok(val) => val,
-                Err(env::VarError::NotPresent) => {
-                    eprintln!("Error: HASHEDBUILD_CACHE environment variable is not set to the path of the cache.");
-                    std::process::exit(1)
+            let cache_path = match store_dir::ensure() {
+                Err(err) => {
+                    eprintln!("{err}");
+                    std::process::exit(1);
                 },
-                Err(env::VarError::NotUnicode(_)) => {
-                    eprintln!("HASHEDBUILD_CACHE contains invalid unicode characters.");
-                    std::process::exit(1)
-                },
+                Ok(p) => p,
             };
-            let cache_path = PathBuf::from(cache_dir_str);
             if let Err(err) = fs::create_dir_all(&cache_path) {
                 eprintln!("Tried to create the cache directory (because it has not exited), but an IO error occured: {err}");
                 std::process::exit(1);
